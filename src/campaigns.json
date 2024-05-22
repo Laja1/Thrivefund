@@ -1,0 +1,44 @@
+[
+    {
+        "id":1,
+      "campaignName": "Medicinal Cases",
+        "cases":120,
+        "text":"Lamboa community needs your help for crisis management from 3 days of non-stop flooding.",
+        "image":"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWVkaWNhbHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":2,
+      "campaignName": "School Fees",
+        "cases":120,
+        "text":"Lamboa community needs your help for crisis management from 3 days of non-stop flooding.",
+        "image":"https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2Nob29sfGVufDB8fDB8fHww"
+    },
+    {
+        "id":3,
+      "campaignName": "School Fees",
+        "cases":120,
+        "text":"Lamboa community needs your help for crisis management from 3 days of non-stop flooding.",
+        "image":"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWVkaWNhbHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":4,
+      "campaignName": "School Fees",
+        "cases":120,
+        "text":"Lamboa community needs your help for crisis management from 3 days of non-stop flooding.",
+        "image":"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWVkaWNhbHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":5,
+      "campaignName": "School Fees",
+        "cases":120,
+        "text":"Lamboa community needs your help for crisis management from 3 days of non-stop flooding.",
+        "image":"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWVkaWNhbHxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":6,
+      "campaignName": "School Fees",
+        "cases":120,
+        "text":"Lamboa community needs your help for crisis management from 3 days of non-stop flooding.",
+        "image":"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWVkaWNhbHxlbnwwfHwwfHx8MA%3D%3D"
+    }
+]
