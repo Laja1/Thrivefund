@@ -32,7 +32,7 @@ export default function HorizontalNonLinearStepper() {
   };
 
   return (
-    <div className='items-center pt-10 min-h-screen flex flex-col'>
+    <div className='items-center pt-10 min-h-screen mx-auto flex flex-col'>
       <Box className='w-[100%] lg:w-[50%] md:w-[75%]'>
         <Stepper alternativeLabel activeStep={activeStep}>
           {steps.map((label, index) => (

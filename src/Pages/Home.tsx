@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex bg-[#F7FAFC]  flex-col container mx-auto w-full items-center justify-center pt-10">
       <div className="relative w-full">
-        <img src="pictures/Home.png" className="w-full lg:h-full md:h-[75vh] h-[50vh] rounded-md object-cover" alt="Home" />
+           <motion.div  initial={{scale:1.5,}} animate={{scale:1}} transition={{duration:1,ease:"easeIn"}}> <img src="pictures/Home.png" className="w-full lg:h-full md:h-[75vh] h-[50vh] rounded-md object-cover" alt="Home" /></motion.div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
           <p className="lg:text-6xl text-3xl md:text-3xl font-bold">THRIVE FUND</p>
           <p className="text-sm text-[#ffffff80] mt-2">We are here to make the world a better place...</p>

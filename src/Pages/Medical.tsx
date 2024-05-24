@@ -1,62 +1,22 @@
 import FundCard from "@/Components/FundCard"
 import {motion} from 'framer-motion'
-const data=[
-    {
-"id":1,
-"title":"Help Muhammad and his family in ojota",
-"goal":20000,
-"image":"https://images.unsplash.com/photo-1620767463583-14661a8b63eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2F6YXxlbnwwfHwwfHx8MA%3D%3D",
-"donations":200,
-"amountRaised":2000
-    },
-       {
-"id":2,
-"title":"Help Muhammad and his family in ojota",
-"goal":20000,
-"image":"https://images.unsplash.com/photo-1620767463583-14661a8b63eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2F6YXxlbnwwfHwwfHx8MA%3D%3D",
-"donations":200,
-"amountRaised":2000
-    },
-       {
-"id":3,
-"title":"Help Muhammad and his family in ojota",
-"goal":20000,
-"image":"https://images.unsplash.com/photo-1620767463583-14661a8b63eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2F6YXxlbnwwfHwwfHx8MA%3D%3D",
-"donations":200,
-"amountRaised":2000
-    },
-       {
-"id":4,
-"title":"Help Muhammad and his family in ojota",
-"goal":20000,
-"image":"https://images.unsplash.com/photo-1620767463583-14661a8b63eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2F6YXxlbnwwfHwwfHx8MA%3D%3D",
-"donations":200,
-"amountRaised":2000
-    },
-       {
-"id":5,
-"title":"Help Muhammad and his family in ojota",
-"goal":20000,
-"image":"https://images.unsplash.com/photo-1620767463583-14661a8b63eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2F6YXxlbnwwfHwwfHx8MA%3D%3D",
-"donations":200,
-"amountRaised":2000
-    },
-       {
-"id":1,
-"title":"Help Muhammad and his family in ojota",
-"goal":20000,
-"image":"https://images.unsplash.com/photo-1620767463583-14661a8b63eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2F6YXxlbnwwfHwwfHx8MA%3D%3D",
-"donations":200,
-"amountRaised":2000
-    },
-]
+import { Link } from "react-router-dom"
+import medical from '../medical.json'
 export default function Medical() {
+    
+
   return (
-   <div className="min-h-screen flex bg-[#F7FAFC]  flex-col container mx-auto w-full items-center justify-center pt-10">
-      <h1 className="text-3xl font-bold">Medical Cases</h1>
+   <div className="min-h-screen flex bg-[#F7FAFC]  flex-col container mx-auto w-full justify-center p-10">
+    <Link to='/'><div className="flex-row flex gap-1  p-2  w-[100px] rounded-md items-start">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+</svg>
+<p>Back</p>
+    </div></Link>
+      <h1 className="text-3xl pt-3 text-center font-bold">Medical Cases</h1>
          <motion.div className="flex-row items-center justify-center pb-10 pt-3 flex flex-wrap gap-3" initial={{opacity:0.5, y:60}} animate={{opacity:1,y:0}} transition={{duration:1,}}>
-    {data.map((item) => 
-    <FundCard width='40%' goal={item.goal} amountRaised={item.amountRaised} key={item.id} image={item.image} title={item.title} donations={item.donations}/>
+    {medical.map((item) => 
+    <Link to={`/details/${item.id}`}><FundCard width={(item.amountRaised/item.goal)*100} goal={item.goal} amountRaised={item.amountRaised} key={item.id} image={item.image} title={item.title} donations={item.donations}/></Link>
   )}    
       </motion.div>
     </div>

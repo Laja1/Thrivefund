@@ -5,8 +5,7 @@ type CardProps = {
     donations: number,
     goal:number,
     amountRaised: number,
-   
-    width:string
+    width:number
 }
 
 export default function FundCard({image,width,title,goal,donations,amountRaised,}:CardProps) {
@@ -18,7 +17,7 @@ export default function FundCard({image,width,title,goal,donations,amountRaised,
               <p className="font-bold text-center">{title}</p> 
               
 <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-  <div className="bg-blue-600 h-2.5 rounded-full" style={{width:width}}></div>
+  <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${width}%` }}></div>
 </div>
 
               <p className="text-blue-400">{donations} donations</p></div>
