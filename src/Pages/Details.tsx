@@ -62,11 +62,11 @@ export default function Details() {
  
     <div className="p-2 border-2 rounded-md shadow-xl">{complete ? <p className="text-sm">Complete</p> :<p className="text-sm">Goal not reached</p>}</div>
           </div>
-  <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+  <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative  z-50">
     
-  <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
+  <div className="fixed inset-0 flex items-center justify-center p-4  bg-black bg-opacity-50">
     
-    <Dialog.Panel className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8 lg:px-12">
+    <Dialog.Panel className="w-full max-w-lg bg-white  rounded-lg shadow-lg p-8 lg:px-12">
           <img src={data.image} alt={data.title} className="w-full h-full object-cover" />
       <Dialog.Title className="text-xl font-bold text-gray-900">{data.title}</Dialog.Title>
       <Dialog.Description className="mt-2 text-gray-700">

@@ -15,29 +15,28 @@ interface FundingMediaProps {
 export default function FundingMedia({ defaultValues, onSubmit, onPrevious }: FundingMediaProps) {
   const [uploads, setUploads] = useState<Upload[]>(defaultValues?.uploads || []);
 
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      const fileArray = Array.from(files);
-      const promises = fileArray.map(file => {
-        return new Promise<Upload>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            resolve({
-              name: file.name,
-              data: reader.result as string,
-              contentType: file.type
-            });
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      });
-
-      Promise.all(promises).then(results => setUploads(prev => [...prev, ...results]));
-    }
+    if (!files) return;
+  
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        setUploads(prevUploads => [
+          ...prevUploads,
+          {
+            name: file.name,
+            data: base64String,
+            contentType: file.type
+          }
+        ]);
+      };
+      reader.readAsDataURL(file);
+    });
   };
-
+  
   const handleRemoveUpload = (index: number) => {
     setUploads(prev => prev.filter((_, i) => i !== index));
   };
