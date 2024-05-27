@@ -24,7 +24,9 @@ export default function SignIn() {
     axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, data)
       .then((res) => {
         window.localStorage.setItem("data", res.data.data)
-        navigate('/')})
+        navigate('/')
+      console.log(res)
+      })
     .catch((err) => {
             if (err.response.data.error==='An unexpected error occurred - This email has not been registered on our system.'){
  setErrorMessage('This email has not been registered')

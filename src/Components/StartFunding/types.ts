@@ -19,6 +19,6 @@ export interface FormData {
         name: string;
       data: string; 
       contentType: string;
-    }[];
+    }[]
   };
 }

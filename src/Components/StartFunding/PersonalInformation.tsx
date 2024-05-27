@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormData } from './types';
-import { useNavigate } from 'react-router-dom';
+
 const schema = yup.object().shape({
     firstname: yup.string().required('First name is required'),
   lastname: yup.string().required('Last name is required'),
@@ -21,13 +21,9 @@ export default function PersonalInformation({ defaultValues, onNext }:PersonalIn
         resolver: yupResolver(schema),
          defaultValues
     })
-const navigate = useNavigate()
-    const token = window.localStorage.getItem('token');
-    console.log(token)
-    if (!token) {
-      console.log('Token not found');
-      navigate('/SignIn');
-    }
+
+   
+   
   
   
   const onSubmit = handleSubmit((data) => onNext(data));

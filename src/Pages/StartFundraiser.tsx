@@ -10,14 +10,13 @@ export default function StartFundraiser() {
   const [formData, setFormData] = useState<Partial<FormData>>({});
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
-  const token = window.localStorage.getItem('token');
+   const token = window.localStorage.getItem('data');
 
   useEffect(() => {
     if (!token) {
       navigate('/SignIn');
     }
-  }, [token, navigate]);
-
+  }, [navigate, token]);
   const handleNextStep = (data: any) => {
     setFormData(prev => ({ ...prev, ...data }));
     setStep(prev => prev + 1);

@@ -3,15 +3,12 @@ import { Outlet, NavLink } from "react-router-dom";
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [getToken, setGetToken] = useState<string | null>(localStorage.getItem("token"));
-
+ 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
   const handleLogout = () => {
-    window.localStorage.removeItem("token");
-    setGetToken(null);
+    window.localStorage.clear();
     window.location.reload();
   };
 
@@ -25,7 +22,7 @@ export default function Layout() {
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ThriveFund.</span>
             </a>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-              {getToken ? (
+              {window.localStorage.length === 1 ? (
                 <button
                   type="button"
                   onClick={handleLogout}
