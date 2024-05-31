@@ -9,7 +9,9 @@ import SignUp from "./auth/Signup";
 import Details from "./Pages/Details";
 import About from "./Pages/About";
 import Verification from "./Components/StartFunding/Verification";
-
+import Business from "./Pages/Business";
+import Educational from "./Pages/Educational";
+import Others from './Pages/Others'
 export default function App() {
   
   return (
@@ -20,8 +22,14 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='/Medical' element={<Medical/>} />
+          <Route path='/Business' element={<Business/>} />
+          <Route path='/Educational' element={<Educational/>} />
+          <Route path='/Others' element={<Others/>} />
+        
+          
            <Route path='/Verification' element={<Verification/>} />
           <Route path='/StartFundraiser' element={<StartFundraiser />}>
+            
           </Route>
           <Route path='/About' element={<About />} />
           <Route path='/Details/:id' element={<Details/>} />

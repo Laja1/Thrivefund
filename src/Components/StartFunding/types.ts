@@ -15,10 +15,6 @@ export interface FormData {
    deadline:Date
   };
   fundingMedia: {
-    uploads: {
-        name: string;
-      data: string; 
-      contentType: string;
-    }[]
+   
   };
 }
