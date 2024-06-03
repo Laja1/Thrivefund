@@ -14,17 +14,30 @@ export default function About() {
           <p className="lg:text-6xl text-3xl md:text-3xl font-bold">THRIVE FUND</p>
         </div>
       </div>
+      <div className='pt-10 '>
+        
+<ol className="relative border-s border-gray-20">                  
+    <li className="mb-10 ms-4">
+        <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+        <h1 className="text-lg font-font-bold text-gray-900 ">Our Vision</h1>
+       
+        <p className="mb-4 text-base font-normal text-gray-500 ">We believe that everyone has the right to live a healthy and fulfilling life. We are committed to providing support to individuals with medical conditions, ensuring that every child has the opportunity to learn and grow, and helping families in need of immediate assistance.</p>
+       
+    </li>
+    <li className="mb-10 ms-4">
+        <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+        <h1 className="text-lg font-font-bold text-gray-900 ">Our Mission</h1>
+        
+        <p className="text-base font-normal text-gray-500 ">Our mission is to provide a platform for individuals who have medical needs, educational aspirations, or immediate needs. We connect them with individuals and organizations that are willing to offer financial assistance. Our goal is to make it easier for people to get the help they need, when they need it.</p>
+    </li>
+   
+</ol>
 
-      <div >
-        <p className="font-bold  pt-10 pb-5 lg:text-4xl text-2xl md:text-3xl">Our Vision</p>
-        <p className='text-sm'>We believe that everyone has the right to live a healthy and fulfilling life. We are committed to providing support to individuals with medical conditions, ensuring that every child has the opportunity to learn and grow, and helping families in need of immediate assistance.</p>
-      </div>
-         <div>
-        <p className="font-bold  pt-10 pb-5 lg:text-4xl text-2xl md:text-3xl">Our Mission</p>
-        <p className='text-sm'>Our mission is to provide a platform for individuals who have medical needs, educational aspirations, or immediate needs. We connect them with individuals and organizations that are willing to offer financial assistance. Our goal is to make it easier for people to get the help they need, when they need it.</p>
-      </div>
+
+</div>
+    
       <div className=' flex-col px-10 flex'>
-      <p className="font-bold  pb-5  pt-10 lg:text-4xl text-2xl md:text-3xl">How We Help</p>
+      <p className="font-bold  pb-5  pt-10 text-lg">How We Help</p>
       <div className='flex gap-2 flex-col  md:flex-col lg:flex-row py-5'>
        <div className='w-[290px] h-[150px] shadow-xl flex flex-col justify-center border-2  px-8  rounded-lg' >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-8">
