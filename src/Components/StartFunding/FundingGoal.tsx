@@ -7,7 +7,7 @@ const schema = yup.object().shape({
   fundraiserTitle: yup.string().required('Fundraiser Title Required'),
   fundraiserDescription: yup
     .string()
-    .min(20, 'The description must be at least 20 characters')
+    .min(200, 'The description must be at least 200 characters')
     .max(500, 'The description must be at most 500 characters')
     .required('A fundraiser description is required'),
   goal: yup

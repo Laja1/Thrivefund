@@ -2,16 +2,37 @@ import { Link } from "react-router-dom";
 
 export default function Verification() {
   return (
-    <div className="min-h-screen lg:w-[1000px] w-[350px] rounded-xl  flex bg-[#F7FAFC] flex-col container mx-auto p-10">
-  
-        <p className="font-bold   pb-5  text-2xl ">Thank you!, Your form has been recieved. Our team is currently reviewing it.</p>
-    <img src="https://images.unsplash.com/photo-1493135637657-c2411b3497ad?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDN8fHxlbnwwfHx8fHw%3D" className="h-[100%] rounded-md"/>
-    <p>Review in progress</p>
-    <p className="py-2">While you wait, you can learn more about our review process or check out our latest news and updates.</p>
-   <Link to='/'>
-    <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                             Return Home
-                            </button></Link>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-100 to-blue-300">
+      <div className="max-w-lg rounded-xl bg-white shadow-lg p-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+          Thank you!
+        </h1>
+        <p className="text-gray-600 mb-6 text-center">
+          Your form has been received. Our team is currently reviewing it.
+        </p>
+        <div className="flex justify-center mb-6">
+          <img
+            src="pictures/review.jpg"
+            alt="Review in progress"
+            className="w-full max-w-xs rounded-md"
+          />
+        </div>
+        <p className="text-gray-600 mb-2 text-center">Review in progress</p>
+        <p className="text-gray-600 mb-8 text-center">
+          While you wait, you can learn more about our review process or check
+          out our latest news and updates.
+        </p>
+        <div className="flex justify-center">
+          <Link to="/">
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+              type="submit"
+            >
+              Return Home
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
-  )
+  );
 }

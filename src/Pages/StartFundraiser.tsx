@@ -11,6 +11,7 @@ export default function StartFundraiser() {
   const [step, setStep] = useState(0);
   const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState<string>('')
+ 
   const [tokenChecked, setTokenChecked] = useState(false); // New state to track if token is checked
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ export default function StartFundraiser() {
     if (tokenData) {
       const parsedTokenData = JSON.parse(tokenData);
       const tokenValue = parsedTokenData.value;
-      console.log('Token:', tokenValue);
+      
       setToken(tokenValue);
     } else {
       console.log('No token found in localStorage');
@@ -59,9 +60,16 @@ export default function StartFundraiser() {
       if (res.data.message = "email already exists") {
         setError('Email already exist')
       }
-      console.log(res);
+     
+      console.log(res.data)
+      
     })
-    .catch(err => console.error(err));
+      .catch(err => {
+        if (err.response.data.error = "Invalid Token.") {
+          setError('Please Re-login')
+        }
+        console.error(err.response.data.error)
+      });
   };
 
   const renderProgressBar = () => {
@@ -96,10 +104,11 @@ export default function StartFundraiser() {
   return (
     <div className="min-h-screen lg:w-[1000px] md:w-[650px] w-[350px] rounded-xl h-[700px] flex bg-[#F7FAFC] flex-col container mx-auto p-10">
       {token ? renderProgressBar() : null}
-      {token ? renderStep() : null}
       {error && (
-                <div className="text-red-600 ">{error}</div>
+                <div className="text-red-600 text-center py-5">{error}</div>
               )}
+      {token ? renderStep() : null}
+      
     </div>
   );
 }
