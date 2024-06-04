@@ -27,7 +27,7 @@ export default function Medical() {
   }, [link]);
 
   return (
-    <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full justify-center p-10">
+    <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full  p-10">
       <Link to='/'>
         <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -36,7 +36,7 @@ export default function Medical() {
           <p>Back</p>
         </div>
       </Link>
-      <h1 className="text-3xl pt-3 text-center font-bold">Medical Cases</h1>
+      <h1 className="text-3xl pt-3 text-center loraa font-bold">Medical Cases</h1>
       <motion.div className="flex-row items-center justify-center pb-10 pt-3 flex flex-wrap gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
         {data.map((item) => (
           <Link to={`/details/${item.id}`} key={item.id}>

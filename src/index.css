@@ -2,6 +2,21 @@
   @tailwind components;
   @tailwind utilities;
 
+ 
+
+  .lora {
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .loraa {
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+  }
+
   @layer base {
     :root {
       --background: 0 0% 100%;

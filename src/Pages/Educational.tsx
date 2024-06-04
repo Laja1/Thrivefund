@@ -36,7 +36,7 @@ export default function Educational() {
           <p>Back</p>
         </div>
       </Link>
-      <h1 className="text-3xl pt-3 text-center font-bold">Educational Cases</h1>
+      <h1 className="text-3xl pt-3 text-center loraa font-bold">Educational Cases</h1>
       <motion.div className="flex-row items-center justify-center pb-10 pt-3 flex flex-wrap gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
         {data.map((item) => (
           <Link to={`/details/${item.id}`} key={item.id}>

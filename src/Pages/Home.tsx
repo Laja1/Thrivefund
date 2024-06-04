@@ -20,7 +20,7 @@ export default function Home() {
         </div>
       </div>
           <What />
-        <h1 className="font-bold  pt-10 lg:text-4xl text-2xl md:text-3xl">Campaigns</h1>
+        <h1 className="font-bold  pt-10 lg:text-4xl text-2xl md:text-3xl loraa">Campaigns</h1>
     <motion.div className="flex-row items-center justify-center pb-10 pt-3 flex flex-wrap gap-3" initial={{opacity:0.5, y:60}} whileInView={{opacity:1,y:0}} transition={{duration:1,}}>{campaignJson.map((item) => 
     <Card key={item.id} image={item.image} campaignName={item.campaignName} cases={item.cases} text={item.text} link={item.link}/>
   )}</motion.div>  

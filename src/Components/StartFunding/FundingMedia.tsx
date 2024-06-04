@@ -43,7 +43,7 @@ export default function FundingMedia({ defaultValues, onSubmit, onPrevious }: Fu
 
   return (
     <div className="pt-5">
-      <p className="text-3xl font-bold pb-3">Fundraiser Media</p>
+      <p className="text-3xl font-bold pb-3 loraa">Fundraiser Media</p>
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 mb-6 md:grid-cols-1">
           <div
@@ -67,19 +67,19 @@ export default function FundingMedia({ defaultValues, onSubmit, onPrevious }: Fu
             <input {...getInputProps()} />
             <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
             {isDragActive ? (
-              <p className="text-gray-600">Drop the file here...</p>
+              <p className="text-gray-600 lora">Drop the file here...</p>
             ) : (
-                <div><p className="text-gray-600">Drag 'n' drop media here, or click to select media</p>
-                <p className="text-gray-600 text-sm text-center  pt-5">Upload a valid & clear cover photo</p></div>
-            )}
+                <div><p className="text-gray-600 lora">Drag 'n' drop media here, or click to select media</p>
+                <p className="text-gray-600 text-sm text-center  lora pt-5">Upload a valid & clear cover photo</p></div>
+            )} 
           </div>
           <div>
             {upload && (
               <div>
-                <p className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Uploaded Media:</p>
+                <p className="mb-2 text-sm font-medium text-gray-900 lora dark:text-white">Uploaded Media:</p>
                 <ul>
                   <li className="flex items-center mb-2">
-                    <p className="text-sm">{upload.name}</p>
+                    <p className="text-sm lora">{upload.name}</p>
                     <button
                       type="button"
                       className="text-red-600 ml-2"

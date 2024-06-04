@@ -12,14 +12,14 @@ export default function Fundraising() {
      <div className='flex-row flex gap-3'>
         <img src='icons/quickfundraising.svg'/>
  <div className='flex-col flex gap-2 '>
-    <p>Quick Fundraising</p>
-    <p className='text-sm w-52'>Find and support the causes you care about with ease.</p>
+    <p className='loraa'>Quick Fundraising</p>
+    <p className='lora text-sm w-52'>Find and support the causes you care about with ease.</p>
  </div>
  </div>
   <div className='flex-row flex gap-3'><img src='icons/startDonating.svg'/>
  <div className='flex-col flex gap-2 '>
-    <p>Start Donating</p>
-    <p className='text-sm w-52'>Make an impact today.</p>
+    <p className='loraa'>Start Donating</p>
+    <p className='lora text-sm w-52'>Make an impact today.</p>
  </div>
  </div>
 </div></motion.div>

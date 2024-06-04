@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Dialog } from '@headlessui/react';
 // import { Button } from "@/Components/ui/button";
@@ -13,6 +13,8 @@ type DetailsProps = {
   fundingMedia: { pathToFile: string }[];
   fundraiserTitle: string;
   donations: number;
+  firstname: string
+  lastname:string
 };
 
 export default function Details() {
@@ -20,10 +22,10 @@ export default function Details() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [data, setData] = useState<DetailsProps | null>(null);
   const { id } = useParams<{ id: string }>();
-
+console.log(id)
   useEffect(() => {
     if (!id) return;
-    axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/${id}`)
+    axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/details/${id}`)
       .then(res => {
         setData(res.data);
         if (res.data?.amountRaised >= res.data?.goal) {
@@ -41,29 +43,30 @@ export default function Details() {
 
   return (
     <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full justify-center p-10">
-      <Link to='/Medical'>
+   
         <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
           <p>Back</p>
         </div>
-      </Link>
+     
       <div className="pb-3" />
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <img src={data.fundingMedia[0]?.pathToFile} alt={data.fundraiserTitle} className="w-full h-full object-cover" />
         <div className="p-6">
-          <h2 className="text-3xl font-bold mb-4">{data.fundraiserTitle}</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">Description: Add your description here</p>
+          <p className="text-gray-700 lora text-sm   leading-relaxed mb-4">{data.firstname} {data.lastname}</p>
+          <h2 className="text-3xl font-bold loraa mb-4">{data.fundraiserTitle}</h2>
+          <p className="text-gray-700 lora text-sm leading-relaxed mb-4">Description: Add your description here</p>
           <div className="mb-4">
-            <div className="text-gray-600 mb-2">Goal: ₦{data.goal}</div>
+            <div className="text-gray-600 lora mb-2">Goal: ₦{data.goal}</div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
               <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${progressPercentage}%` }}></div>
             </div>
           </div>
           <div className="flex items-center justify-between mb-4">
-            <div className="text-gray-600">Amount Raised: ₦{data.amountRaised}</div>
-            <div className="text-gray-600">Donations: {data.donations}</div>
+            <div className="text-gray-600 lora">Amount Raised: ₦{data.amountRaised}</div>
+            <div className="text-gray-600 lora">Donations: {data.donations}</div>
           </div>
           <div className="flex justify-between">
             <button onClick={() => setIsOpen(true)} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Donate Now</button>
@@ -112,10 +115,10 @@ export default function Details() {
                   </div>
                 </div>
                 <div className="mt-6 flex justify-end space-x-4">
-                  <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                  <button onClick={() => setIsOpen(false)} className="px-4 py-2  bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     Cancel
                   </button>
-                  <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <button onClick={() => setIsOpen(false)} className="px-4 lora py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     Proceed To Payment
                   </button>
                 </div>
