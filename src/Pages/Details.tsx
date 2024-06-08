@@ -5,10 +5,10 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import axios from "axios";
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK_TEST_KEY);
+import {CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+
+
 
 type DetailsProps = {
   _id: string;
@@ -67,7 +67,7 @@ export default function Details() {
       const { clientSecret } = response.data;
 
       const cardElement = elements?.getElement(CardElement);
-
+console.log(cardElement)
       if (!stripe) {
         throw new Error('Stripe is not initialized');
       }
@@ -104,7 +104,7 @@ export default function Details() {
   const progressPercentage = (data.amountRaised / data.goal) * 100;
 
   return (
-    <Elements stripe={stripePromise}>
+   
     <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full justify-center p-10">
       <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -199,6 +199,6 @@ export default function Details() {
           </Dialog>
         </div>
       </div>
-    </div> </Elements>
+    </div>
   );
 }
