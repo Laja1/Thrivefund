@@ -5,10 +5,7 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import axios from "axios";
 import { useForm, SubmitHandler } from 'react-hook-form';
-
-import {CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
-
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 type DetailsProps = {
   _id: string;
@@ -66,12 +63,12 @@ export default function Details() {
 
       const { clientSecret } = response.data;
 
-      const cardElement = elements?.getElement(CardElement);
-console.log(cardElement)
-      if (!stripe) {
-        throw new Error('Stripe is not initialized');
+      if (!stripe || !elements) {
+        throw new Error('Stripe or Elements is not initialized');
       }
 
+      const cardElement = elements.getElement(CardElement);
+      
       if (!cardElement) {
         throw new Error('Card Element is not available');
       }
@@ -90,6 +87,7 @@ console.log(cardElement)
         setErrorMessage(result.error.message || 'An error occurred during the payment process.');
       } else {
         console.log('Payment successful!');
+         setIsOpen(false)
       }
     } catch (error) {
       console.error(error);
@@ -100,7 +98,23 @@ console.log(cardElement)
   if (!data) {
     return <div>Loading...</div>;
   }
-
+ const cardElementOptions = {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#aab7c4"
+        }
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
+    }
+  };
   const progressPercentage = (data.amountRaised / data.goal) * 100;
 
   return (
@@ -184,6 +198,14 @@ console.log(cardElement)
                       <label htmlFor="display-name" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Display My Name</label>
                     </div>
                   </div>
+                
+                  <div className="mt-6 "><div style={{ padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px' }}>
+          <CardElement options={cardElementOptions} />
+        </div>
+         <div className="items-center justify-center flex pt-2">{errorMessage && <div className="error-message">{errorMessage}</div>}</div>
+               </div>
+        
+
                   <div className="mt-6 flex justify-end space-x-4">
                     <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                       Cancel
@@ -192,8 +214,7 @@ console.log(cardElement)
                       Proceed To Payment
                     </button>
                   </div>
-                  {errorMessage && <div className="error-message">{errorMessage}</div>}
-                </form>
+                  </form>
               </Dialog.Panel>
             </div>
           </Dialog>
