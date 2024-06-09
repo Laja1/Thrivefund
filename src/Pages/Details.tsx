@@ -96,7 +96,7 @@ export default function Details() {
   };
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <div className="bg-white min-h-screen w-full items-center justify-center flex">Loading...</div>;
   }
  const cardElementOptions = {
     style: {

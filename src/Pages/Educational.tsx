@@ -15,6 +15,7 @@ type Fundraiser = {
 
 export default function Educational() {
   const [data, setData] = useState<Fundraiser[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const { link } = useParams<{ link: string }>();
 
   useEffect(() => {
@@ -23,8 +24,10 @@ export default function Educational() {
         setData(res.data);
         console.log(res.data);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
   }, [link]);
+
 
   return (
     <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full p-10">
@@ -37,20 +40,24 @@ export default function Educational() {
         </div>
       </Link>
       <h1 className="text-3xl pt-3 text-center loraa font-bold">Educational Cases</h1>
-      <motion.div className="flex-row items-center justify-center pb-10 pt-3 flex flex-wrap gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-        {data.map((item) => (
-          <Link to={`/details/${item.id}`} key={item.id}>
-            <FundCard
-              width={(item.amountRaised / item.goal) * 100}
-              goal={item.goal}
-              amountRaised={item.amountRaised}
-              image={item.image}
-              title={item.title}
-              donations={item.donations}
-            />
-          </Link>
-        ))}
-      </motion.div>
+      {data.length === 0 ? (
+      <div className=" w-full pt-10 items-center justify-center flex">No applicants found for this category</div>
+      ) : (
+        <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-4 grid md:grid-cols-2 grid-cols-1 gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+          {data.map((item) => (
+            <Link to={`/details/${item.id}`} key={item.id}>
+              <FundCard
+                width={(item.amountRaised / item.goal) * 100}
+                goal={item.goal}
+                amountRaised={item.amountRaised}
+                image={item.image}
+                title={item.title}
+                donations={item.donations}
+              />
+            </Link>
+          ))}
+        </motion.div>
+      )}
     </div>
   );
 }

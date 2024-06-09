@@ -22,7 +22,7 @@ export default function FundCard({image,width,title,goal,donations,amountRaised,
 
               <p className="text-blue-400 lora">{donations} donations</p></div>
               <div className="text-sm items-center justify-center gap-1 flex py-5">
-                <p className="font-bold underline lora">₦{amountRaised}</p> <p className="lora">raised of</p> <span className="font-bold underline lora">₦{goal}</span> <p className="lora">goal</p></div>
+                <p className="font-bold lora">₦{amountRaised}</p> <p className="lora">raised of</p> <span className="font-bold lora">₦{goal}</span> <p className="lora">goal</p></div>
             
           </div>
     </div>
