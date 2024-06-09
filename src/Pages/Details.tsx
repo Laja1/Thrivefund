@@ -16,6 +16,7 @@ type DetailsProps = {
   donations: number;
   firstname: string;
   lastname: string;
+  fundraiserDescription:string
 };
 
 type donateForm = {
@@ -133,7 +134,7 @@ export default function Details() {
         <div className="p-6">
           <p className="text-gray-700 lora text-sm leading-relaxed mb-4">{data.firstname} {data.lastname}</p>
           <h2 className="text-3xl font-bold loraa mb-4">{data.fundraiserTitle}</h2>
-          <p className="text-gray-700 lora text-sm leading-relaxed mb-4">Description: Add your description here</p>
+          <p className="text-gray-700 lora text-sm leading-relaxed mb-4">Description: {data.fundraiserDescription}</p>
           <div className="mb-4">
             <div className="text-gray-600 lora mb-2">Goal: ₦{data.goal}</div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
