@@ -15,7 +15,7 @@ type Fundraiser = {
 
 export default function Educational() {
   const [data, setData] = useState<Fundraiser[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+
   const { link } = useParams<{ link: string }>();
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function Educational() {
         console.log(res.data);
       })
       .catch(err => console.error(err))
-      .finally(() => setLoading(false));
   }, [link]);
 
 
