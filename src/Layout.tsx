@@ -1,32 +1,42 @@
 import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
+import { getToken } from "./lib/utils/helpers";
 
 export default function Layout() {
-  
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const getToken = window.localStorage.getItem("data")
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleLogout = () => {
     window.localStorage.removeItem("token");
-   window.localStorage.clear()
+    window.localStorage.clear();
     window.location.reload();
   };
+
+  console.log(getToken());
 
   return (
     <div>
       <div className="drop-shadow">
-        <nav className="bg-[#F7FAFC] border-gray-200 dark:bg-gray-900">
+        <nav className="bg-gray-100 border-gray-200 dark:bg-gray-900">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-              <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ThriveFund.</span>
+            <a
+              href="https://flowbite.com/"
+              className="flex items-center space-x-3 rtl:space-x-reverse"
+            >
+              <img
+                src="https://flowbite.com/docs/images/logo.svg"
+                className="h-8"
+                alt="Flowbite Logo"
+              />
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                ThriveFund.
+              </span>
             </a>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-              {getToken ? (
+              {getToken() ? (
                 <button
                   type="button"
                   onClick={handleLogout}
@@ -53,13 +63,27 @@ export default function Layout() {
                 aria-expanded={isMenuOpen ? "true" : "false"}
               >
                 <span className="sr-only">Open main menu</span>
-                <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
+                <svg
+                  className="w-5 h-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 17 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1h15M1 7h15M1 13h15"
+                  />
                 </svg>
               </button>
             </div>
             <div
-              className={`items-center justify-between ${isMenuOpen ? "block" : "hidden"} w-full md:flex md:w-auto md:order-1`}
+              className={`items-center justify-between ${
+                isMenuOpen ? "block" : "hidden"
+              } w-full md:flex md:w-auto md:order-1`}
               id="navbar-cta"
             >
               <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-[#F7FAFC] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-[#F7FAFC] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

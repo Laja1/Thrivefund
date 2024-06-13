@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Dialog } from '@headlessui/react';
 import { Input } from "@/Components/ui/input";
+import io from 'socket.io-client';
 import { Label } from "@/Components/ui/label";
 import axios from "axios";
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -50,6 +51,22 @@ export default function Details() {
         }
       })
       .catch(err => console.error(err));
+    
+  const socket = io(`${import.meta.env.VITE_BASE_URL}`);  
+    socket.on('connect', () => {
+      console.log('Connected to socket');
+    });
+
+    socket.on('paymentReceived', (data) => {
+      console.log('Received message:', data);
+      // Handle received data here
+    });
+
+    // Clean up on unmount
+    return () => {
+      socket.disconnect();
+    };
+  
   }, [id]);
 
   const onSubmit: SubmitHandler<donateForm> = async (formData) => {
@@ -87,7 +104,8 @@ export default function Details() {
       if (result.error) {
         setErrorMessage(result.error.message || 'An error occurred during the payment process.');
       } else {
-        console.log('Payment successful!');
+        console.log(result, 'Payment successful!');
+        window.location.reload()
          setIsOpen(false)
       }
     } catch (error) {
@@ -116,7 +134,8 @@ export default function Details() {
       }
     }
   };
-  const progressPercentage = (data.amountRaised / data.goal) * 100;
+  
+const progressPercentage = Math.min((data.amountRaised / data.goal) * 100, 100);
 
   return (
    
@@ -147,7 +166,7 @@ export default function Details() {
           </div>
           <div className="flex justify-between">
             <button onClick={() => setIsOpen(true)} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Donate Now</button>
-            <div className="p-2 border-2 rounded-md shadow-xl">{complete ? <p className="text-sm">Complete</p> : <p className="text-sm">Goal not reached</p>}</div>
+            <div className="p-2 border  rounded-md shadow-xl">{complete ? <p className="text-sm">Complete</p> : <p className="text-sm">Goal not reached</p>}</div>
           </div>
           <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
             <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">

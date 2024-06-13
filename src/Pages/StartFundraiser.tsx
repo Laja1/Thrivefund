@@ -61,7 +61,7 @@ export default function StartFundraiser() {
         setError('Email already exist')
       }
      
-      console.log(res.data)
+      
       
     })
       .catch(err => {
