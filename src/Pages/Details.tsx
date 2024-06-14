@@ -17,7 +17,7 @@ type DetailsProps = {
   donations: number;
   firstname: string;
   lastname: string;
-  fundraiserDescription:string
+  fundraiserDescription: string;
 };
 
 type donateForm = {
@@ -46,27 +46,31 @@ export default function Details() {
     axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/details/${id}`)
       .then(res => {
         setData(res.data);
+        console.log(res.data)
         if (res.data?.amountRaised >= res.data?.goal) {
           setComplete(true);
         }
       })
       .catch(err => console.error(err));
-    
-  const socket = io(`${import.meta.env.VITE_BASE_URL}`);  
+
+    const socket = io(`${import.meta.env.VITE_BASE_URL}`,
+     {withCredentials: true}, );
     socket.on('connect', () => {
       console.log('Connected to socket');
+      
     });
 
     socket.on('paymentReceived', (data) => {
       console.log('Received message:', data);
       // Handle received data here
+      // Possibly update the UI with new data
+      
     });
 
     // Clean up on unmount
     return () => {
       socket.disconnect();
     };
-  
   }, [id]);
 
   const onSubmit: SubmitHandler<donateForm> = async (formData) => {
@@ -86,7 +90,7 @@ export default function Details() {
       }
 
       const cardElement = elements.getElement(CardElement);
-      
+
       if (!cardElement) {
         throw new Error('Card Element is not available');
       }
@@ -105,8 +109,8 @@ export default function Details() {
         setErrorMessage(result.error.message || 'An error occurred during the payment process.');
       } else {
         console.log(result, 'Payment successful!');
-        window.location.reload()
-         setIsOpen(false)
+        // window.location.reload();
+        // setIsOpen(false);
       }
     } catch (error) {
       console.error(error);
@@ -117,7 +121,8 @@ export default function Details() {
   if (!data) {
     return <div className="bg-white min-h-screen w-full items-center justify-center flex">Loading...</div>;
   }
- const cardElementOptions = {
+
+  const cardElementOptions = {
     style: {
       base: {
         color: "#32325d",
@@ -134,8 +139,8 @@ export default function Details() {
       }
     }
   };
-  
-const progressPercentage = Math.min((data.amountRaised / data.goal) * 100, 100);
+
+  const progressPercentage = Math.min((data.amountRaised / data.goal) * 100, 100);
 
   return (
    

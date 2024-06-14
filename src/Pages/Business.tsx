@@ -28,6 +28,7 @@ export default function Business() {
   if (!data) {
     return <div className="bg-white min-h-screen w-full items-center justify-center flex">Loading...</div>;
   }
+  
   return (
     <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full p-10">
       <Link to='/'>
@@ -39,13 +40,13 @@ export default function Business() {
         </div>
       </Link>
       <h1 className="text-3xl pt-3 loraa text-center font-bold">Business Cases</h1>
-      <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-4 grid md:grid-cols-2 grid-cols-1 gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+      <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-3 grid md:grid-cols-2 grid-cols-1 gap-10" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
       {data.map((item) => {
           const imageUrl = item.fundingMedia.length > 0 ? item.fundingMedia[0].pathToFile : '';
           return (
             <Link to={`/details/${item._id}`} key={item._id}>
               <FundCard
-                width={(item.amountRaised / item.goal) * 100}
+                width={ Math.min((item.amountRaised / item.goal) * 100, 100)}
                 goal={item.goal}
                 amountRaised={item.amountRaised}
                 image={imageUrl}

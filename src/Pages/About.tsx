@@ -7,11 +7,11 @@ export default function About() {
   return (
     <div className="min-h-screen flex bg-[#F7FAFC]  items-center  flex-col container mx-auto w-full  justify-center p-10">
          <div className="relative w-full">
-           <motion.div  initial={{scale:1.5,}} animate={{scale:1}} transition={{duration:1,ease:"easeIn"}}>
-             <img src="pictures/About.jpg" className="w-full lg:h-full md:h-[50vh] h-[40vh] rounded-md object-cover" alt="About" />
+           <motion.div  initial={{scale:1.5,}} animate={{scale:1}} transition={{duration:1,ease:"easeIn"}} className='items-center flex justify-center'>
+             <img src="pictures/about-us.png" className="w-scren lg:h-screen md:h-[50vh] h-[40vh] rounded-md object-cover" alt="About" />
              </motion.div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
-          <p className="lg:text-6xl text-3xl md:text-3xl font-bold">THRIVE FUND</p>
+          <p className="lg:text-3xl text-gray-300 text-3xl md:text-3xl font-bold">ABOUT US</p>
         </div>
       </div>
       <div className='pt-10 '>
@@ -37,8 +37,8 @@ export default function About() {
 </div>
     
       <div className=' flex-col px-10 flex'>
-      <p className="font-bold  pb-5  pt-10 text-lg lora">How We Help</p>
-      <div className=' gap-2 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 py-5'>
+      <p className="  pb-5  pt-10 loraa   font-bold">How We Help</p>
+     <motion.div  initial={{opacity:0.5, y:60}} whileInView={{opacity:1,y:0}} transition={{duration:1,}}> <div className=' gap-2 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 py-5'>
        <div className='w-[290px] h-[150px] shadow-xl flex flex-col justify-center   px-8  rounded-lg' >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-8">
   <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -56,18 +56,19 @@ export default function About() {
        </div>
        
            <div className='w-[290px] h-[150px] shadow-xl flex flex-col justify-center   px-8  rounded-lg' >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-8">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
 </svg>
-<p className='font-bold loraa'>Medical</p>
-<p className='lora'>Support for medical bills, treatment, and therapy</p>
+
+<p className='font-bold loraa'>Business</p>
+<p className='lora'>Hep with funding of your business</p>
        </div>
          <div className='w-[290px] h-[150px] shadow-xl flex flex-col justify-center   px-8  rounded-lg' >
      <img src='icons/rice.svg' className='w-8 h-8'/>
 <p className='font-bold loraa'>Other needs</p>
 <p className='lora'>Assistance with food, shelter, and other essentials</p>
        </div>
-       </div>
+       </div></motion.div>
       </div>
     
       <div>
