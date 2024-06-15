@@ -8,7 +8,7 @@ export default function About() {
     <div className="min-h-screen flex bg-[#F7FAFC]  items-center  flex-col container mx-auto w-full  justify-center p-10">
          <div className="relative w-full">
            <motion.div  initial={{scale:1.5,}} animate={{scale:1}} transition={{duration:1,ease:"easeIn"}} className='items-center flex justify-center'>
-             <img src="pictures/about-us.png" className="w-scren lg:h-screen md:h-[50vh] h-[40vh] rounded-md object-cover" alt="About" />
+             <img src="/pictures/about-us.png" className="w-scren lg:h-screen md:h-[50vh] h-[40vh] rounded-md object-cover" alt="About" />
              </motion.div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
           <p className="lg:text-3xl text-gray-300 text-3xl md:text-3xl font-bold">ABOUT US</p>
