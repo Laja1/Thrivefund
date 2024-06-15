@@ -55,7 +55,7 @@ export default function Swipe({ donors }: { donors: Donor[] }) {
               <div className="mb-2">
                 <span className="font-bold">Amount:</span> ₦ {donor.amount.toLocaleString()}
               </div>
-              <img src='/pictures/donate.png' alt='Donation' className='mt-2' /></div>
+              <img src='/pictures/donate.jpg' alt='Donation' className='mt-2' /></div>
             </SwiperSlide>
           ))
         )}
