@@ -5,11 +5,11 @@ import FundCard from "@/Components/FundCard";
 import { motion } from 'framer-motion';
 
 type Fundraiser = {
-  id: string;
+  _id: string;
   amountRaised: number;
   goal: number;
-  image: string;
-  title: string;
+  fundingMedia: { pathToFile: string }[];
+  fundraiserTitle: string;
   donations: number;
 };
 
@@ -18,7 +18,7 @@ export default function Others() {
   const { link } = useParams<{ link: string }>();
 console.log(link)
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/${link}`)
+    axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/Others`)
       .then(res => {
         setData(res.data);
         console.log(res.data);
@@ -40,15 +40,15 @@ console.log(link)
      {data.length === 0 ? (
       <div className=" w-full pt-10 items-center justify-center flex">No applicants found for this category</div>
       ) : (
-        <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-4 grid md:grid-cols-2 grid-cols-1 gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+        <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-3 grid md:grid-cols-2 grid-cols-1 gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
           {data.map((item) => (
-            <Link to={`/details/${item.id}`} key={item.id}>
+            <Link to={`/details/${item._id}`} key={item._id}>
               <FundCard
                 width={(item.amountRaised / item.goal) * 100}
                 goal={item.goal}
                 amountRaised={item.amountRaised}
-                image={item.image}
-                title={item.title}
+                image={item.fundingMedia[0].pathToFile}
+                title={item.fundraiserTitle}
                 donations={item.donations}
               />
             </Link>

@@ -145,16 +145,16 @@ console.log(dataToSend)
   const progressPercentage = Math.min((data.amountRaised / data.goal) * 100, 100);
 
   return (
-    <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full justify-center p-10">
-      <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
+    <div className="min-h-screen items-center flex bg-[#F7FAFC] flex-col container mx-auto w-screen justify-center py-10 ">
+      {/* <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
         <p>Back</p>
-      </div>
+      </div> */}
 
-      <div className="pb-3" />
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+    
+      <div className="max-w-4xl  mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <img src={data.fundingMedia[0]?.pathToFile} alt={data.fundraiserTitle} className="w-full h-full object-cover" />
         <div className="p-6">
           <p className="text-gray-700 lora text-sm leading-relaxed mb-4">{data.firstname} {data.lastname}</p>
