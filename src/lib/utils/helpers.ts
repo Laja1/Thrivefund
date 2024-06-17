@@ -6,7 +6,7 @@ export interface JwtResponse extends JwtPayload {
 
 export const getToken = (): string | null => {
   const token = window.localStorage.getItem("data") ?? "";
-
+console.log(token)
   try {
     const user: JwtResponse = jwtDecode(token);
     return user?._id ?? null;

@@ -48,18 +48,20 @@ export default function Swipe({ donors }: { donors: Donor[] }) {
         }}
       >
         {donors.length === 0 ? (
-          <SwiperSlide>No donors found.</SwiperSlide>
+          <SwiperSlide className='items-center flex justify-center'>No donations yet.</SwiperSlide>
         ) : (
           donors.map((donor, index) => (
             <SwiperSlide key={index} className="bg-white p-4 rounded-lg shadow-md">
-              <div>
-                <div className="mb-2">
-                  <span className="font-bold">Name:</span> {donor.anonymity === "anonymous" ? "Anonymous" : donor.donorName || "N/A"}
+              <div className='flex-row gap-10  items-center justify-center flex'>
+               
+              <div className='flex-col gap-2 flex'> 
+              <div className="text-sm">
+               {donor.anonymity === "anonymous" ? "Anonymous" : donor.donorName || "N/A"}
                 </div>
-                <div className="mb-2">
-                  <span className="font-bold">Amount:</span> ₦ {donor.amount.toLocaleString()}
-                </div>
-                <img src='/pictures/donate.jpg' alt='Donation' className='mt-2' />
+                <div className="text-sm">
+                ₦ {donor.amount.toLocaleString()}
+                </div></div>
+               <div className='items-center flex justify-center'><img src='/icons/giving.svg' alt='Donation' className='mt-2 h-[50px]' /></div> 
               </div>
             </SwiperSlide>
           ))

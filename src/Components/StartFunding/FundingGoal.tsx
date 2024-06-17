@@ -15,12 +15,12 @@ const schema = yup.object().shape({
     .transform(value => (isNaN(value) ? undefined : value))
     .required('Goal is required'),
   category: yup
-    .string()
+    .string() 
     .oneOf(['Medical', 'Education', 'Business', 'Others'], 'Please select a valid category')
     .required('Category is required'),
   deadline: yup
     .date()
-    .transform(value => (value === '' ? null : value))
+    .transform(value => (isNaN(value) ? undefined : value))
     .required('Deadline date is required')
 });
 interface FundingGoalProps {
@@ -36,7 +36,7 @@ export default function FundingGoal({ defaultValues, onNext, onPrevious }: Fundi
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+   
     onNext(data);
   });
 

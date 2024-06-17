@@ -40,3 +40,24 @@ export const LoginSchema = yup.object({
             'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
         ),
 }).required();
+
+export const paymentSchema = yup.object().shape({
+ fundraiserId: yup.string().optional(),
+  fullname: yup.string()
+    .required('Full name is required')
+    .min(2, 'Full name must be at least 2 characters')
+    .max(50, 'Full name must be at most 50 characters'),
+  email: yup.string().email('Invalid email address').required('Email is required'),
+  amount: yup
+    .number()
+    .typeError('Amount must be a number')
+    .min(1000, 'Amount must not be less than 1000')
+    .required('Amount is required'),
+  
+  tip: yup.number()
+    .transform((value, originalValue) => (originalValue.trim() === '' ? null : value))
+    .nullable()
+    .optional(),
+
+  anonymity: yup.string().required('Anonymity field is required')
+});

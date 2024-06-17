@@ -11,7 +11,7 @@ type CardProps = {
 export default function FundCard({image,width,title,goal,donations,amountRaised,}:CardProps) {
   return (
     <div className="w-[300px] border-[1px] shadow-xl  border-[#fdfdf] flex flex-col rounded-md">
-          <img src={image} className="rounded-t-md"/>
+          <img src={image} className="rounded-t-md h-[35vh]"/>
           <div className="px-5  flex flex-col">
               <div className="flex-col  flex gap-2 items-center"> 
               <p className="font-bold lora text-center">{title}</p> 
