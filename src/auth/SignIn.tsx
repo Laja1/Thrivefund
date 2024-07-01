@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../validation/schemas';
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
+import {jwtDecode} from "jwt-decode";
 export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordMessage, setPasswordMessage] = useState<string>('');
   const navigate = useNavigate();
-
+const location = useLocation();
   type SignInForm = {
     email: string;
     password: string;
@@ -23,43 +23,34 @@ export default function SignIn() {
   const onSubmit: SubmitHandler<SignInForm> = (data) => {
     axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, data)
       .then((res) => {
-        const tokenData = {
-          value: res.data.data,
-          timestamp: new Date().getTime()
-        };
-        window.localStorage.setItem('data', JSON.stringify(tokenData));
-        navigate('/');
+       const token = res.data.data; // Assuming the server returns a JWT token
+    let decodedToken;
+    try {
+      decodedToken = jwtDecode(token); // Decode the token
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      setErrorMessage('Invalid token received from server.');
+      return;
+    }
+
+        window.localStorage.setItem('data', JSON.stringify({ token, decodedToken }));
+
+       const redirectPath = location.state?.from?.pathname || '/';
+        navigate(redirectPath);
+        window.location.reload()
       })
       .catch((err) => {
         if (err.response?.data?.error === 'An unexpected error occurred - This email has not been registered on our system.') {
-          setErrorMessage('This email has not been registered');
+          setErrorMessage('We could not find an account with this email');
         } else {
           console.error(err.response?.data?.error);
         }
         if (err.response?.data?.error === 'An unexpected error occurred - Invalid password') {
-          setPasswordMessage('Invalid Password');
+          setPasswordMessage('Password doesnt match this account');
         }
       });
   };
 
-  useEffect(() => {
-    const checkTokenExpiration = () => {
-      const tokenData = window.localStorage.getItem('data');
-      if (tokenData) {
-        const { timestamp } = JSON.parse(tokenData);
-        const currentTime = new Date().getTime();
-        const thirtyMinutes = 30 * 60 * 1000;
-        if (currentTime - timestamp > thirtyMinutes) {
-          window.localStorage.removeItem('data');
-        
-          console.log('Token has expired and has been removed.');
-        }
-      }
-    };
-
-    const intervalId = setInterval(checkTokenExpiration, 60 * 1000);
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <div className="min-h-screen flex mx-auto bg-[#F7FAFC] items-center justify-center w-full">
@@ -84,17 +75,17 @@ export default function SignIn() {
                 <div className="text-red-600 ">{passwordMessage}</div>
               )}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-center">
               <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                 Sign In
               </button>
-              <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+              {/* <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
                 Forgot Password?
-              </a>
+              </a> */}
             </div>
             <div className="gap-1 flex-row items-center justify-center pt-5 flex">
               <p className="text-sm">Don't have an account?</p>
-              <Link to='/SignUp'>
+              <Link to='/signUp'>
                 <p className="underline text-sm text-blue-500 hover:text-blue-800">Sign Up</p>
               </Link>
             </div>

@@ -4,10 +4,12 @@ import { Dialog } from '@headlessui/react';
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import Swipe from "@/Components/Swiper";
-
+import { paymentSchema } from "@/validation/schemas";
+import { yupResolver } from "@hookform/resolvers/yup";
 type DetailsProps = {
   _id: string;
   amountRaised: number;
@@ -24,8 +26,8 @@ type donateForm = {
   fullname: string;
   amount: number;
   email: string;
-  tip: number;
-  anonymity: string; // Change to boolean
+ tip?: number | null; // Change tip to be nullable
+  anonymity: string; 
   fundraiserId?: string;
 };
 type Donor = {
@@ -37,10 +39,13 @@ type Donor = {
   fundraiserId: string;
   paymentIntentId: string;
 };
+
+
 export default function Details() {
   const [donors, setDonors] = useState<Donor[]>([]);
   const [complete, setComplete] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true); 
   const [data, setData] = useState<DetailsProps | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const { id } = useParams<{ id: string }>();
@@ -48,24 +53,33 @@ export default function Details() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const { register, handleSubmit } = useForm<donateForm>();
+ const { register, handleSubmit, formState:{errors}} = useForm<donateForm>({
+   resolver: yupResolver(paymentSchema)
+  });
 
   useEffect(() => {
     if (!id) return;
     axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/details/${id}`)
       .then(res => {
         setData(res.data);
-        console.log(res.data);
+      
+         setTimeout(() => {
+          setLoading(false); // Stop loading after 3 seconds
+        }, 2000);
         if (res.data?.amountRaised >= res.data?.goal) {
           setComplete(true);
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+         setTimeout(() => {
+          setLoading(false); // Stop loading after 3 seconds
+        }, 2000);
+        console.error(err)});
 
     axios.get(`${import.meta.env.VITE_BASE_URL}/donors/${id}`)
       .then(res => {
          setDonors(res.data.data);
-        console.log(res.data.data);
+       
       })
       .catch(err => {
         console.error("Error fetching donors:", err);
@@ -77,7 +91,7 @@ export default function Details() {
   const onSubmit: SubmitHandler<donateForm> = async (formData) => {
     // Convert anonymity string to boolean
     const dataToSend = { ...formData, fundraiserId: id,  anonymity: formData.anonymity === 'true' };
-console.log(dataToSend)
+
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/create-payment`, dataToSend, {
         headers: {
@@ -110,7 +124,7 @@ console.log(dataToSend)
       if (result.error) {
         setErrorMessage(result.error.message || 'An error occurred during the payment process.');
       } else {
-        console.log(result, 'Payment successful!');
+       
         window.location.reload();
         setIsOpen(false);
       }
@@ -121,7 +135,13 @@ console.log(dataToSend)
   };
 
   if (!data) {
-    return <div className="bg-white min-h-screen w-full items-center justify-center flex">Loading...</div>;
+    return <div className="bg-white min-h-screen w-full items-center justify-center flex"><ClipLoader
+          color='#000'
+          loading={loading}
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        /></div>;
   }
 
   const cardElementOptions = {
@@ -171,10 +191,12 @@ console.log(dataToSend)
             <div className="text-gray-600 lora">Donations: {data.donations}</div>
           </div>
           <div className="flex justify-between">
-            <button onClick={() => setIsOpen(true)} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Donate Now</button>
+            <button onClick={() => {
+              setIsOpen(true)}} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Donate Now</button>
             <div className="p-2 border  rounded-md shadow-xl">{complete ? <p className="text-sm">Complete</p> : <p className="text-sm">Goal not reached</p>}</div>
           </div>
           <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+            
             <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
               <Dialog.Panel className="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 lg:px-12">
                 <div className="items-center justify-center flex flex-col">
@@ -187,28 +209,37 @@ console.log(dataToSend)
                     <div className="grid grid-cols-1 gap-2">
                       <div className="flex items-center gap-4">
                         <Label htmlFor="name" className="w-1/4 text-right text-gray-700">Name</Label>
-                        <Input id="name" {...register('fullname')} defaultValue="Ifeoluwa Esther" className="w-3/4 border rounded-md p-2" />
+                        <Input id="name" {...register('fullname')} placeholder="John Thomas" className="w-3/4 border rounded-md p-2" />
+                   
                       </div>
+                      {errors.fullname && <p className="text-red-600 text-center text-sm">{errors.fullname.message}</p>}
+             
                       <div className="flex items-center gap-4">
                         <Label htmlFor="email" className="w-1/4 text-right text-gray-700">Email</Label>
-                        <Input id="email" {...register('email')} defaultValue="ifeoluwa@gmail.com" className="w-3/4 border rounded-md p-2" />
+                        <Input id="email" {...register('email')}  placeholder="john@gmail.com" className="w-3/4 border rounded-md p-2" />
+                     
                       </div>
-                      {/* Amount Field */}
+                       {errors.email && <p className="text-red-600 text-center text-sm">{errors.email.message}</p>}
+             
                       <div className="space-y-2 gap-2">
                         <div className="flex items-center gap-4">
                           <Label htmlFor="amount" className="w-1/4 text-right text-gray-700">Amount</Label>
                           <div className="relative w-3/4">
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">₦</span>
-                            <Input id="amount" defaultValue="1000" {...register('amount')} className="col-span-3 pl-7" />
+                            <Input id="amount"  {...register('amount')}  placeholder="1000" className="col-span-3 pl-7" />
                           </div>
                         </div>
+                          {errors.amount && <p className="text-red-600 text-center text-sm">{errors.amount.message}</p>}
+             
                         <div className="flex items-center gap-4">
                           <Label htmlFor="tip" className="w-1/4 text-right text-gray-700">Tip</Label>
                           <div className="relative w-3/4">
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">₦</span>
-                            <Input id="tip" defaultValue="10" {...register('tip')} className="col-span-3 pl-7" />
+                            <Input id="tip"  {...register('tip')}  placeholder="10" className="col-span-3 pl-7" />
                           </div>
                         </div>
+                         {errors.tip && <p className="text-red-600 text-center text-sm">{errors.tip.message}</p>}
+             
                       </div>
                     </div>
                   </div>
@@ -223,7 +254,8 @@ console.log(dataToSend)
                           <label htmlFor="anonymity-false" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                         </div>
                       </div>
-                  
+                   {errors.anonymity && <p className="text-red-600 text-center text-sm">{errors.anonymity.message}</p>}
+             
                   <div className="mt-4">
                     <div style={{ padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px' }}>
                       <CardElement options={cardElementOptions} />

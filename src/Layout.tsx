@@ -42,10 +42,10 @@ export default function Layout() {
                   onClick={handleLogout}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Logout
+                  Sign Out
                 </button>
               ) : (
-                <NavLink to="/SignIn">
+                <NavLink to="/signIn">
                   <button
                     type="button"
                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -98,7 +98,7 @@ export default function Layout() {
                   HOME
                 </NavLink>
                 <NavLink
-                  to="/About"
+                  to="/about-us"
                   className={({ isActive }) =>
                     isActive
                       ? "block py-2 px-3 font-bold md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
@@ -118,7 +118,7 @@ export default function Layout() {
                   Contact
                 </NavLink> */}
                 <NavLink
-                  to="/StartFundraiser"
+                  to="/startfundraiser"
                   className={({ isActive }) =>
                     isActive
                       ? "block py-2 px-3 font-bold md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
@@ -134,6 +134,7 @@ export default function Layout() {
       </div>
       <main className="bg-[#F7FAFC]">
         <Outlet />
+       
       </main>
     </div>
   );

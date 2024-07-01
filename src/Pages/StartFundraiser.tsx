@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import PersonalInformation from '@/Components/StartFunding/PersonalInformation';
 import FundingGoal from '@/Components/StartFunding/FundingGoal';
@@ -10,29 +10,33 @@ export default function StartFundraiser() {
   const [formData, setFormData] = useState<Partial<FormData>>({});
   const [step, setStep] = useState(0);
   const [token, setToken] = useState<string | null>(null);
-  const [error, setError] = useState<string>('')
- 
-  const [tokenChecked, setTokenChecked] = useState(false); // New state to track if token is checked
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const tokenData = window.localStorage.getItem('data');
-    if (tokenData) {
-      const parsedTokenData = JSON.parse(tokenData);
-      const tokenValue = parsedTokenData.value;
-      
-      setToken(tokenValue);
+  const tokenData = window.localStorage.getItem('data');
+  if (tokenData) {
+    const { token, decodedToken } = JSON.parse(tokenData);
+    if (decodedToken && decodedToken.exp) {
+      const currentTime = Date.now() / 1000; // current time in seconds
+      if (decodedToken.exp > currentTime) {
+        // Token is still valid
+        setToken(token);
+      } else {
+        // Token is expired
+        setError('Token expired. Please re-login.');
+        navigate('/signIn', { state: { from: location } });
+      }
     } else {
-      console.log('No token found in localStorage');
+      // Decoded token payload is invalid
+      setError('Invalid token. Please re-login.');
+      navigate('/signIn', { state: { from: location } });
     }
-    setTokenChecked(true); // Indicate that the token has been checked
-  }, []);
-
-  useEffect(() => {
-    if (tokenChecked && !token) {
-      navigate('/SignIn');
-    }
-  }, [navigate, token, tokenChecked]);
+  } else {
+    navigate('/signIn', { state: { from: location } });
+  }
+}, [navigate, location]);
 
   const handleNextStep = (data: any) => {
     setFormData(prev => ({ ...prev, ...data }));
@@ -46,35 +50,34 @@ export default function StartFundraiser() {
   const handleSubmit = (data: any) => {
     const finalData = {
       ...formData,
-      fundingMedia: data, 
+      fundingMedia: data,
     };
-    console.log(finalData);
     axios.post(`${import.meta.env.VITE_BASE_URL}/upload`, finalData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`, // Use the token variable
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then(res => {
-      navigate('/Verification');
-      if (res.data.message = "email already exists") {
-        setError('Email already exist')
-      }
-     
-      
-      
-    })
-      .catch(err => {
-        if (err.response.data.error = "Invalid Token.") {
-          setError('Please Re-login')
+      .then(res => {
+       
+        if (res.data.message === "email already exists") {
+          setError('Email already exists');
+        } else {
+          navigate('/review-ongoing');
         }
-        console.error(err.response.data.error)
+      })
+      .catch(err => {
+        console.log(err);
+        
+        if (err.response.data.error === "Invalid Token.") {
+          setError('Please Re-login');
+        }
+        console.error(err.response.data);
       });
   };
 
   const renderProgressBar = () => {
-    const progressPercentage = (step / 2) * 100; // Changed to 3 steps in total
-
+    const progressPercentage = (step / 2) * 100; // Based on 3 steps
     return (
       <div>
         <p>Step {step + 1} of 3</p>
@@ -105,10 +108,9 @@ export default function StartFundraiser() {
     <div className="min-h-screen lg:w-[1000px] md:w-[650px] w-[350px] rounded-xl h-[700px] flex bg-[#F7FAFC] flex-col container mx-auto p-10">
       {token ? renderProgressBar() : null}
       {error && (
-                <div className="text-red-600 text-center py-5">{error}</div>
-              )}
+        <div className="text-red-600 text-center py-5">{error}</div>
+      )}
       {token ? renderStep() : null}
-      
     </div>
   );
 }

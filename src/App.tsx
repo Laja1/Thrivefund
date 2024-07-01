@@ -17,22 +17,24 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/SignIn' element={<SignIn/>} />
-        <Route path='/SignUp' element={<SignUp/>} />
+     
+      
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path='/Medical' element={<Medical/>} />
-          <Route path='/Business' element={<Business/>} />
-          <Route path='/Educational' element={<Educational/>} />
-          <Route path='/Others' element={<Others/>} />
+             <Route path='/signIn' element={<SignIn/>} />
+               <Route path='/signUp' element={<SignUp/>} />
+          <Route path='/medical' element={<Medical/>} />
+          <Route path='/business' element={<Business/>} />
+          <Route path='/educational' element={<Educational/>} />
+          <Route path='/others' element={<Others/>} />
         
           
-           <Route path='/Verification' element={<Verification/>} />
-          <Route path='/StartFundraiser' element={<StartFundraiser />}>
+           <Route path='/review-ongoing' element={<Verification/>} />
+          <Route path='/startfundraiser' element={<StartFundraiser />}>
             
           </Route>
-          <Route path='/About' element={<About />} />
-          <Route path='/Details/:id' element={<Details/>} />
+          <Route path='/about-us' element={<About />} />
+          <Route path='/details/:id' element={<Details/>} />
         </Route>
       </Routes>
     </BrowserRouter>
