@@ -22,7 +22,7 @@ export default function SignUp() {
     });
 
     const onSubmit: SubmitHandler<SignupForm> = (data) => {
-        console.log(data);
+       
         axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, data)
             .then((res) => {
                 console.log(res)

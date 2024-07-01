@@ -1,72 +1,85 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import FundCard from "@/Components/FundCard";
+
+import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
-import ClipLoader from "react-spinners/ClipLoader";
+import useFetch from "@/customHook/useFetch";
+import FundCard from "@/Components/FundCard";
 
 type Fundraiser = {
   _id: string;
   amountRaised: number;
   goal: number;
- fundingMedia: { pathToFile: string }[];
+  fundingMedia: { pathToFile: string }[];
   fundraiserTitle: string;
   donations: number;
 };
 
 export default function Educational() {
-  const [data, setData] = useState<Fundraiser[]>([]);
-  const [loading, setLoading] = useState(true); // Add loading state
-  const { link } = useParams<{ link: string }>();
-
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/Education`)
-      .then(res => {
-        setData(res.data);
-         setTimeout(() => {
-          setLoading(false); // Stop loading after 3 seconds
-        }, 3000);
-     
-      })
-      .catch(err => console.error(err)) 
-       setTimeout(() => {
-          setLoading(false); // Stop loading after 3 seconds
-        }, 3000);
-  }, [link]);
-
-
-  if (loading) {
-    return <div className="bg-white min-h-screen w-full items-center justify-center flex"> <ClipLoader
-          color='#000'
-          loading={loading}
-          size={100}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        /></div>;
+   const { data, isLoading, error } = useFetch<Fundraiser[]>({
+    url: `${import.meta.env.VITE_BASE_URL}/fundraiser/Education`,
+    queryKey: ['educationFundraisers']
+  });
+  if (isLoading) {
+    return <LoadingState />;
   }
-  
-  return (
-    <div className="min-h-screen items-center flex bg-[#F7FAFC] flex-col container mx-auto w-full p-10">
 
-      <h1 className="text-3xl pt-3 text-center loraa font-bold">Educational Cases</h1>
-      {data.length === 0 ? (
-      <div className=" w-full pt-10 items-center justify-center flex">There are currently no campaigns at this moment.</div>
-      ) : (
-        <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-4 grid md:grid-cols-2 grid-cols-1 gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-          {data.map((item) => (
-            <Link to={`/details/${item._id}`} key={item._id}>
-              <FundCard
-                width={(item.amountRaised / item.goal) * 100}
-                goal={item.goal}
-                amountRaised={item.amountRaised}
-                image={item.fundingMedia[0].pathToFile}
-                title={item.fundraiserTitle}
-                donations={item.donations}
-              />
-            </Link>
-          ))}
-        </motion.div>
-      )}
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!data || data.length === 0) {
+    return <NoDataState />;
+  }
+
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full p-10">
+      <Link to='/'>
+        <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+          <p>Back</p>
+        </div>
+      </Link>
+      <h1 className="text-3xl pt-3 text-center font-bold">Educatioinal Cases</h1>
+      <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 items-center justify-center pb-10 pt-3"
+        initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+        {data.map((item) => (
+          <Link to={`/details/${item._id}`} key={item._id}>
+            <FundCard
+              width={(item.amountRaised / item.goal) * 100}
+              goal={item.goal}
+              amountRaised={item.amountRaised}
+              image={item.fundingMedia.length > 0 ? item.fundingMedia[0].pathToFile : ""}
+              title={item.fundraiserTitle}
+              donations={item.donations}
+            />
+          </Link>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+function LoadingState() {
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+      <p>Loading...</p>
+    </div>
+  );
+}
+
+function ErrorState({ error }: { error: Error }) {
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+      <p>Error: {error.message}</p>
+    </div>
+  );
+}
+
+function NoDataState() {
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+      <p>No applicants found for this category</p>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function Layout() {
     window.location.reload();
   };
 
-  console.log(getToken());
+ 
 
   return (
     <div>
