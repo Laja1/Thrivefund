@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import FundCard from "@/Components/FundCard";
+
+import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
+import useFetch from "@/customHook/useFetch";
+import FundCard from "@/Components/FundCard";
 
 type Fundraiser = {
   _id: string;
@@ -14,20 +14,24 @@ type Fundraiser = {
 };
 
 export default function Medical() {
-  const [data, setData] = useState<Fundraiser[]>([]);
-  const { link } = useParams<{ link: string }>();
+   const { data, isLoading, error } = useFetch<Fundraiser[]>({
+    url: `${import.meta.env.VITE_BASE_URL}/fundraiser/Medical`,
+    queryKey: ['medicalFundraisers']
+  });
+  if (isLoading) {
+    return <LoadingState />;
+  }
 
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASE_URL}/fundraiser/Medical`)
-      .then(res => {
-        setData(res.data);
-        console.log(res.data);
-      })
-      .catch(err => console.error(err));
-  }, [link]);
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!data || data.length === 0) {
+    return <NoDataState />;
+  }
 
   return (
-    <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full  p-10">
+    <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full p-10">
       <Link to='/'>
         <div className="flex-row flex gap-1 p-2 w-[100px] rounded-md items-start">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -36,25 +40,46 @@ export default function Medical() {
           <p>Back</p>
         </div>
       </Link>
-      <h1 className="text-3xl pt-3 text-center loraa font-bold">Medical Cases</h1>
-     {data.length === 0 ? (
-      <div className=" w-full pt-10 items-center justify-center flex">No applicants found for this category</div>
-      ) : (
-        <motion.div className="items-center justify-center pb-10 pt-3 lg:grid-cols-3 grid md:grid-cols-2 grid-cols-1 gap-3" initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-          {data.map((item) => (
-            <Link to={`/details/${item._id}`} key={item._id}>
-              <FundCard
-                width={(item.amountRaised / item.goal) * 100}
-                goal={item.goal}
-                amountRaised={item.amountRaised}
-                image={item.fundingMedia[0].pathToFile}
-                title={item.fundraiserTitle}
-                donations={item.donations}
-              />
-            </Link>
-          ))}
-        </motion.div>
-      )}
+      <h1 className="text-3xl pt-3 text-center font-bold">Medical Cases</h1>
+      <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 items-center justify-center pb-10 pt-3"
+        initial={{ opacity: 0.5, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+        {data.map((item) => (
+          <Link to={`/details/${item._id}`} key={item._id}>
+            <FundCard
+              width={(item.amountRaised / item.goal) * 100}
+              goal={item.goal}
+              amountRaised={item.amountRaised}
+              image={item.fundingMedia.length > 0 ? item.fundingMedia[0].pathToFile : ""}
+              title={item.fundraiserTitle}
+              donations={item.donations}
+            />
+          </Link>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+function LoadingState() {
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+      <p>Loading...</p>
+    </div>
+  );
+}
+
+function ErrorState({ error }: { error: Error }) {
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+      <p>Error: {error.message}</p>
+    </div>
+  );
+}
+
+function NoDataState() {
+  return (
+    <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+      <p>No applicants found for this category</p>
     </div>
   );
 }
