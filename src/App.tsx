@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Layout from "./Layout";
-import Home from "./Pages/Home";
-import StartFundraiser from "./Pages/StartFundraiser";
-import Medical from "./Pages/Medical";
+import Home from "./pages/Home";
+import StartFundraiser from "./pages/StartFundraiser";
+import Medical from "./pages/Medical";
 import SignIn from "./auth/SignIn";
 import SignUp from "./auth/Signup";
-import Details from "./Pages/Details";
-import About from "./Pages/About";
-import Verification from "./Components/StartFunding/Verification";
+import Details from "./pages/Details";
+import About from "./pages/About";
+import Verification from "./components/StartFunding/Verification";
 
-import Educational from "./Pages/Educational";
-import Others from './Pages/Others'
+import Educational from "./pages/Educational";
+import Others from './pages/Others'
 
 export default function App() {
   

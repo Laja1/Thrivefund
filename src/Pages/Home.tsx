@@ -1,13 +1,13 @@
 import { lazy, Suspense } from 'react';
-import Button from "@/Components/Button";
+import Button from "@/components/Button";
 import campaignJson from '../campaigns.json';
 import { motion } from 'framer-motion';
 
 // Lazy load the components
-const Card = lazy(() => import('@/Components/Card'));
-const Footer = lazy(() => import('@/Components/HomeComponents/Footer'));
-const Fundraising = lazy(() => import('@/Components/HomeComponents/Fundraising'));
-const What = lazy(() => import('@/Components/HomeComponents/What'));
+const Card = lazy(() => import('@/components/Card'));
+const Footer = lazy(() => import('@/components/HomeComponents/Footer'));
+const Fundraising = lazy(() => import('@/components/HomeComponents/Fundraising'));
+const What = lazy(() => import('@/components/HomeComponents/What'));
 
 export default function Home() {
   return (

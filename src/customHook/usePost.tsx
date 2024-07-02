@@ -1,33 +1,28 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios';
 
 export default function usePost(url: string, queryKey: string[]) {
   const queryClient = useQueryClient()
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (data: any) => {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-      
-      const responseData = await res.json();
-      
-      if (!res.ok) {
-        throw {
-          data: responseData,
+      try {
+        const res = await axios.post(url, data);
+        return {
+          data: res.data,
           status: res.status,
-          ok: res.ok,
+          ok: res.status >= 200 && res.status < 300,
         };
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const axiosError = error as AxiosError;
+          throw {
+            data: axiosError.response?.data,
+            status: axiosError.response?.status,
+            ok: false,
+          };
+        }
+        throw error;
       }
-      
-      return {
-        data: responseData,
-        status: res.status,
-        ok: res.ok,
-      };
-    
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey })

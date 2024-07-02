@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 import useFetch from "@/customHook/useFetch";
-import FundCard from "@/Components/FundCard";
+import FundCard from "@/components/FundCard";
 
 type Fundraiser = {
   _id: string;

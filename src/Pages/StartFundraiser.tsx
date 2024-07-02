@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import PersonalInformation from '@/Components/StartFunding/PersonalInformation';
-import FundingGoal from '@/Components/StartFunding/FundingGoal';
-import FundingMedia from '@/Components/StartFunding/FundingMedia';
-import type { FormData } from '@/Components/StartFunding/types';
+import PersonalInformation from '@/components/StartFunding/PersonalInformation';
+import FundingGoal from '@/components/StartFunding/FundingGoal';
+import FundingMedia from '@/components/StartFunding/FundingMedia';
+// import type { FormData } from '@/components/StartFunding/types';
 
 export default function StartFundraiser() {
   const [formData, setFormData] = useState<Partial<FormData>>({});
