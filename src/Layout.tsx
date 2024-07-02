@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, Link } from "react-router-dom";
 import { getToken } from "./lib/utils/helpers";
 
 export default function Layout() {
@@ -35,7 +35,17 @@ export default function Layout() {
                 ThriveFund  
               </span>
             </a>
-            <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <div className="flex md:order-2 items-center justify-center gap-0 lg:gap-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+              {getToken() ? (<Link to='/Dashboard'><button type="button"  className="flex text-sm bg-gray-300 size-8 items-center justify-center rounded-full">
+                <span className="sr-only">Open user menu</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+
+              </button></Link>
+              ) :<div></div>}
+     
+
               {getToken() ? (
                 <button
                   type="button"
@@ -54,6 +64,7 @@ export default function Layout() {
                   </button>
                 </NavLink>
               )}
+              
               <button
                 onClick={toggleMenu}
                 data-collapse-toggle="navbar-cta"
@@ -79,6 +90,7 @@ export default function Layout() {
                   />
                 </svg>
               </button>
+              
             </div>
             <div
               className={`items-center justify-between ${

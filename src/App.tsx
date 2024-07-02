@@ -12,6 +12,7 @@ import Verification from "./components/StartFunding/Verification";
 
 import Educational from "./pages/Educational";
 import Others from './pages/Others'
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   
@@ -36,6 +37,7 @@ export default function App() {
             
           </Route>
           <Route path='/about-us' element={<About />} />
+            <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/details/:id' element={<Details/>} />
         </Route>
       </Routes>
