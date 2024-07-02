@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from 'axios';
+
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignUpSchema } from '../validation/schemas';
 import { useState } from "react";
+import usePost from "@/customHook/usePost";
 export default function SignUp() {
      const [errorMessage, setErrorMessage] = useState<string>('');
     const navigate = useNavigate();
+  const { mutate, isPending } = usePost(`${import.meta.env.VITE_BASE_URL}/auth/register`, ['signUp']);
 
     type SignupForm = {
         firstname: string;
@@ -23,16 +25,20 @@ export default function SignUp() {
 
     const onSubmit: SubmitHandler<SignupForm> = (data) => {
        
-        axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, data)
-            .then((res) => {
-                console.log(res)
-                navigate('/SignIn')})
-         .catch((err) => {
-            if (err.response.data.message==='An account already exists with this email.'){
- setErrorMessage(err.response.data.message)
-            }   
-           else{console.log(err)}
-            })
+     mutate(data, {
+onSuccess: (response) => {
+             navigate('/signIn');
+           console.log(response)  
+  },
+ onError: (error: any) => {
+      console.error('Error:', error);
+      if (error.status === 400 && error.data.message === 'This email belongs to an account.') {
+        setErrorMessage(error.data.message);
+      } else {
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      }
+    },
+    });
     };
 
     return (
@@ -57,7 +63,7 @@ export default function SignUp() {
                         <div className="flex-col flex gap-3">
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
-                                <input type="tel" {...register("phone")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="08080118242"  />
+                                <input type="tel" {...register("phone")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0xxxxxxxxxx"  />
                                 {errors.phone && <p className="text-red-600 text-sm">{errors.phone.message}</p>}
                                 
                             </div>
@@ -76,8 +82,8 @@ export default function SignUp() {
                             </div>
                         </div>
                         <div className="flex flex-col space-y-3 items-center justify-between">
-                            <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                Sign Up
+                            <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" disabled={isPending}>
+                                {isPending ? 'Signing Up...' : 'Sign Up'}
                             </button>
                             <div className="gap-1 flex-row items-center justify-center flex">
                                 <p className="text-sm">Already have an account?</p>
