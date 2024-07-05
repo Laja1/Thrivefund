@@ -3,15 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 import useFetch from "@/customHook/useFetch";
 import FundCard from "@/components/FundCard";
-
-type Fundraiser = {
-  _id: string;
-  amountRaised: number;
-  goal: number;
-  fundingMedia: { pathToFile: string }[];
-  fundraiserTitle: string;
-  donations: number;
-};
+import { Fundraiser } from "./type";
 
 export default function Medical() {
    const { data, isLoading, error } = useFetch<Fundraiser[]>({

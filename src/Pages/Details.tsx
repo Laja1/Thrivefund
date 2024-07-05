@@ -4,41 +4,13 @@ import { Dialog } from "@headlessui/react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
+import {donateForm, Donor, DetailsProps} from './type'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Swipe from "@/components/Swiper";
 import { paymentSchema } from "@/validation/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
-type DetailsProps = {
-  _id: string;
-  amountRaised: number;
-  goal: number;
-  fundingMedia: { pathToFile: string }[];
-  fundraiserTitle: string;
-  donations: number;
-  firstname: string;
-  lastname: string;
-  fundraiserDescription: string;
-};
-
-type donateForm = {
-  fullname: string;
-  amount: number;
-  email: string;
-  tip?: number | null; // Change tip to be nullable
-  anonymity: string;
-  fundraiserId?: string;
-};
-type Donor = {
-  amount: number;
-  anonymity: string;
-  currency: string;
-  donorEmail: string;
-  donorName: string;
-  fundraiserId: string;
-  paymentIntentId: string;
-};
 
 export default function Details() {
   const [donors, setDonors] = useState<Donor[]>([]);
