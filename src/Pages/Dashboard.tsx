@@ -1,6 +1,54 @@
-import {  NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
+  const [token, setToken] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const tokenData = window.localStorage.getItem("data");
+    if (tokenData) {
+      const { token, decodedToken } = JSON.parse(tokenData);
+      if (decodedToken && decodedToken.exp) {
+        const currentTime = Date.now() / 1000; // current time in seconds
+        if (decodedToken.exp > currentTime) {
+          // Token is still valid
+          setToken(token);
+        } else {
+          // Token is expired
+          navigate("/signIn", { state: { from: location } });
+        }
+      } else {
+        // Decoded token payload is invalid
+        navigate("/signIn", { state: { from: location } });
+      }
+    } else {
+      navigate("/signIn", { state: { from: location } });
+    }
+  }, [navigate, location]);
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`${import.meta.env.VITE_BASE_URL}/dashboard`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response.status === 401) {
+            navigate("/signIn", { state: { from: location } });
+          }
+        });
+    }
+  }, [token, navigate, location]);
   return (
     <div className="h-full w-full">
       <div className="flex-row h-14 items-center bg-gray-300 flex">
