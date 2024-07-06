@@ -1,13 +1,20 @@
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import useFetch from "@/customHook/useFetchHeaders";
 
 export default function Dashboard() {
   const [token, setToken] = useState<string | null>(null);
-
+  const [error, setError] = useState<string | null>(null);
+  
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { data, isLoading, error: fetchError } = useFetch(
+    `${import.meta.env.VITE_BASE_URL}/dashboard`,
+    ['dashboard'],
+    token
+  );
+console.log(data)
   useEffect(() => {
     const tokenData = window.localStorage.getItem("data");
     if (tokenData) {
@@ -15,14 +22,11 @@ export default function Dashboard() {
       if (decodedToken && decodedToken.exp) {
         const currentTime = Date.now() / 1000; // current time in seconds
         if (decodedToken.exp > currentTime) {
-          // Token is still valid
           setToken(token);
         } else {
-          // Token is expired
           navigate("/signIn", { state: { from: location } });
         }
       } else {
-        // Decoded token payload is invalid
         navigate("/signIn", { state: { from: location } });
       }
     } else {
@@ -31,24 +35,13 @@ export default function Dashboard() {
   }, [navigate, location]);
 
   useEffect(() => {
-    if (token) {
-      axios
-        .get(`${import.meta.env.VITE_BASE_URL}/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-          if (error.response.status === 401) {
-            navigate("/signIn", { state: { from: location } });
-          }
-        });
+    if (fetchError) {
+      setError(fetchError.message);
     }
-  }, [token, navigate, location]);
+  }, [fetchError]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
   return (
     <div className="h-full w-full">
       <div className="flex-row h-14 items-center bg-gray-300 flex">
@@ -71,8 +64,8 @@ export default function Dashboard() {
                 d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
               />
             </svg>
-            <p className="font-bold pt-3 loraa">Tosin Adeniyi</p>
-            <p className="text-sm pt-0 lora">tosin@gmail.com</p>
+                      <p className="font-bold pt-3 loraa"></p>
+                      <p className="text-sm pt-0 lora"></p>
           </div>
           <div className="items-start pl-2">
             <NavLink
@@ -126,7 +119,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="basis-1/2 min-h-screen flex-grow flex bg-gray-200">
-          <Outlet />
+          <Outlet context={data} />
         </div>
       </div>
     </div>

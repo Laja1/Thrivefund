@@ -1,23 +1,18 @@
 import React from 'react';
-import { FaUser, FaEnvelope, FaPhone, FaEdit } from 'react-icons/fa';
-
-// Dummy data
-const userData = {
-  name: "John Doe",
-  email: "johndoe@example.com",
-  phone: "+1 (555) 123-4567"
-};
+import { FaUser, FaEnvelope, FaEdit } from 'react-icons/fa';
+import { useOutletContext } from 'react-router-dom';
 
 export default function PersonalInformation() {
+  const data = useOutletContext<any>();
+
   return (
     <div className="bg-white w-full p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-800 mb-8">Personal Information</h1>
-        <div className="bg-white rounded-xl shadow-lg p-10">
+        <div className="bg-white rounded-xl shadow-lg p-14">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <InfoCard icon={<FaUser />} title="Name" value={userData.name} />
-            <InfoCard icon={<FaEnvelope />} title="Email" value={userData.email} />
-            <InfoCard icon={<FaPhone />} title="Phone" value={userData.phone} />
+            <InfoCard icon={<FaUser />} title="Name" value={data?.firstname && data?.lastname ? `${data.firstname} ${data.lastname}` : 'N/A'}  />
+            <InfoCard icon={<FaEnvelope />} title="Email" value={data?.email || 'N/A'} />
           </div>
           <div className="mt-4 text-right">
             <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out flex items-center justify-center text-sm float-right">
