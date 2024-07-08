@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className='w-screen py-10 flex flex-col items-center justify-center'>
+    <div className='w-screen py-5 flex flex-col items-center justify-center'>
       <div className='flex flex-col lg:flex-row md:flex-col px-10 lg:px-20 w-full max-w-[1200px] justify-between items-start lg:items-center'>
         <div className='flex flex-col gap-6 mb-10 lg:mb-0'>
           <p className='uppercase font-bold loraa'>About</p>

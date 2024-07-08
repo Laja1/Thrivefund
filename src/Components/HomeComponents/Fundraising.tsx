@@ -3,8 +3,8 @@ import {motion} from 'framer-motion'
 
 export default function Fundraising() {
   return (
-    <div className='w-screen py-6 flex flex-col items-center justify-center bg-white'>
-      <div className='w-screen max-w-5xl container mx-auto px-4'>
+    <div className='w- py-6 flex flex-col items-center justify-center bg-white'>
+      <div className='w- max-w-5xl container mx-auto px-4'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-center'>
           <motion.div 
             initial={{ opacity: 0.5, y: 60 }} 

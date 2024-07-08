@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import useFetch from "@/customHook/useFetch";
 import FundCard from "@/components/FundCard";
 import { Fundraiser } from "./type";
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Others() {
    const { data, isLoading, error } = useFetch<Fundraiser[]>({
@@ -56,7 +56,12 @@ export default function Others() {
 function LoadingState() {
   return (
     <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
-      <p>Loading...</p>
+    <ClipLoader
+        color='#000'
+        size={50}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
     </div>
   );
 }
