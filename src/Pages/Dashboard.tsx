@@ -2,26 +2,15 @@ import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "@/customHook/useFetchHeaders";
 import ClipLoader from "react-spinners/ClipLoader";
+
 export default function Dashboard() {
   const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  // First fetch call
-  const { data: dashboardData, isLoading: isDashboardLoading, error: dashboardError } = useFetch(
-    `${import.meta.env.VITE_BASE_URL}/dashboard`,
-    ['dashboard'],
-    token
-  );
 
-  // Second fetch call
-  const { data: fundraisersData, isLoading: isFundraisersLoading, error: fundraisersError } = useFetch(
-    `${import.meta.env.VITE_BASE_URL}/dashboard/fundraisers`,
-    ['userFundraiser'],
-    token
-  );
 
   useEffect(() => {
     const tokenData = window.localStorage.getItem("data");
@@ -34,33 +23,42 @@ export default function Dashboard() {
         } else {
           navigate("/signIn", { state: { from: location } });
         }
-      } else {
-        navigate("/signIn", { state: { from: location } });
       }
     } else {
       navigate("/signIn", { state: { from: location } });
     }
   }, [navigate, location]);
+ 
+  const { data: dashboardData, isLoading: isDashboardLoading, error: dashboardError } = useFetch(
+    `${import.meta.env.VITE_BASE_URL}/dashboard`,
+    ['dashboard'],
+    token
+  );
 
   useEffect(() => {
-    if (dashboardError || fundraisersError) {
-      setError(dashboardError?.message || fundraisersError?.message || "An error occurred");
+    if (dashboardError) {
+      setError(dashboardError.message || "An error occurred");
     }
-  }, [dashboardError, fundraisersError]);
+   
+  }, [dashboardError]);
 
-  if (isDashboardLoading || isFundraisersLoading) return <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">  <ClipLoader
-        color='#000'
-        size={50}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      /></div>;
-  if (error) return <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">{error}</div>;
+  if (isDashboardLoading ) {
+    return (
+      <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">
+        <ClipLoader color="#000" size={50} aria-label="Loading Spinner" data-testid="loader" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="min-h-screen flex bg-[#F7FAFC] justify-center items-center">{error}</div>;
+  }
 
   return (
     <div className="h-full w-full">
-      <div className="flex-row h-14 items-center bg-gray-300 flex">
-        <h1 className="text-xl font-bold pl-10">Dashboard</h1>
-      </div>
+        {/* <div className="flex-row h-14 items-center bg-gray-300 flex">
+          <h1 className="text-xl font-bold pl-10">Dashboard</h1>
+        </div> */}
       <div className="flex-row items-center flex">
         <div className="basis-[250px] flex-col min-h-screen flex">
           <div className="pt-5 items-center flex-col flex">
@@ -86,7 +84,7 @@ export default function Dashboard() {
               to="/dashboard"
               className={({ isActive }) =>
                 isActive
-                 ? "flex-row items-center pt-5 space-x-2 flex text-blue-500"
+                  ? "flex-row items-center pt-5 space-x-2 flex text-blue-500"
                   : "flex-row items-center pt-5 space-x-2 flex"
               }
             >
@@ -130,10 +128,34 @@ export default function Dashboard() {
                 />
               </svg>
             </NavLink>
+            <NavLink
+              to="/dashboard/fundraisers"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex-row items-center pt-5 space-x-2 flex text-blue-500"
+                  : "flex-row items-center pt-5 space-x-2 flex"
+              }
+            >
+              <p className="text-sm pt-0 lora">Fundraisers</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
+                />
+              </svg>
+            </NavLink>
           </div>
         </div>
         <div className="basis-1/2 min-h-screen flex-grow flex bg-gray-200">
-          <Outlet context={{ dashboardData, fundraisersData }} />
+          <Outlet context={{ dashboardData, token}} />
         </div>
       </div>
     </div>

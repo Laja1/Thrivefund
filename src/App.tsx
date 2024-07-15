@@ -13,6 +13,7 @@ import Educational from "./pages/Educational";
 import Others from './pages/Others';
 import Dashboard from "./pages/Dashboard";
 import PersonalInformation from "./pages/PersonalInformation";
+import FundraiserDashboard from "./pages/Fundraiser";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="dashboard" element={<Dashboard />}>
             <Route index element={<PersonalInformation />} />
             <Route path="account-details" element={<AccountDetails />} />
+             <Route path="fundraisers" element={<FundraiserDashboard />} />
           </Route>
         </Route>
       </Routes>
