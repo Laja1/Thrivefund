@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignUpSchema } from '../validation/schemas';
+import { SignUpSchema } from "@/lib/utils/validationSchema/authSchema";
 import { useState } from "react";
 import usePost from "@/customHook/usePost";
 export default function SignUp() {

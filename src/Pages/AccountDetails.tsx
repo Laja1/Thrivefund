@@ -1,6 +1,5 @@
-import { FaAddressCard } from "react-icons/fa6";
-import { LuPlusCircle } from "react-icons/lu";
-import { BsWallet2 } from "react-icons/bs";
+
+import { BsWallet2, FaAddressCard, LuPlusCircle } from '@/assets/react_icons';
 import { Dialog, DialogTitle, DialogDescription } from '@headlessui/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';

@@ -3,12 +3,12 @@ import Button from "@/components/Button";
 import campaignJson from '../campaigns.json';
 import { motion } from 'framer-motion';
 
-// Lazy load the components
 const Card = lazy(() => import('@/components/Card'));
 const Footer = lazy(() => import('@/components/HomeComponents/Footer'));
 const Fundraising = lazy(() => import('@/components/HomeComponents/Fundraising'));
 const What = lazy(() => import('@/components/HomeComponents/What'));
-const Testimonials = lazy(()=>import('@/components/HomeComponents/Testimonials'))
+const Testimonials = lazy(() => import('@/components/HomeComponents/Testimonials'))
+
 export default function Home() {
   return (
     <div className="min-h-screen flex bg-[#F7FAFC] flex-col container mx-auto w-full items-center justify-center pt-10">

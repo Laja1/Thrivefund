@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-
 import { useNavigate, useLocation } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { LoginSchema } from '../validation/schemas';
+import { LoginSchema } from "@/lib/utils/validationSchema/authSchema";
 import { useState } from "react";
 import {jwtDecode} from "jwt-decode";
 import usePost from "@/customHook/usePost";
